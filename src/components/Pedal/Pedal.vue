@@ -18,9 +18,8 @@
 import PedalModel from '@/models/PedalModel'
 export default {
   props: {
-    pedal: {
-      type: Object
-    }
+    pedal: Object,
+    pedalSelected: Boolean
   },
   data() {
     return {
@@ -29,7 +28,6 @@ export default {
       shiftY: null,
       left: null,
       top: null,
-      pedalSelected: false
     }
   },
   mounted() {
@@ -67,7 +65,10 @@ export default {
   },
   methods: {
     selectPedal() {
-      this.pedalSelected = true
+      this.$emit('selectPedal', this.pedal)
+    },
+    unSelect() {
+      this.$emit('selectPedal', null)
     },
     startMoving(e) {
       this.canDrag = true
@@ -76,8 +77,6 @@ export default {
     },
     endMoving() {
       this.canDrag = false
-      this.pedalSelected = false
-      this.$emit('selectPedal', this.pedal)
     },
     updateCoords(e) {
       if (this.canDrag) {
@@ -100,7 +99,7 @@ export default {
   padding: 10px;
   transform: rotate(0);
   border: 1px solid transparent;
-  transition: transform 0.25s ease-in-out;
+  transition: transform 0.25s ease-in-out, border-color 0.25s ease-in-out;
 
   &.right {
     transform: rotate(90deg);

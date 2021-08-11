@@ -1,5 +1,5 @@
 <template>
-  <div class="modal">
+  <div class="modal" :class="{'visible': visible}">
     <div class="name">
       {{ title }}
     </div>
@@ -24,12 +24,9 @@
 <script>
 export default {
   props: {
-    title: {
-      type: String
-    },
-    id: {
-      type: String
-    }
+    title: String,
+    id: String,
+    visible: Boolean
   }
 }
 </script>
@@ -39,11 +36,18 @@ export default {
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 100;
   border-radius: 10px;
   width: 200px;
   background-color: #282d30;
   border: 0;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 0.35s ease-in-out;
+
+  &.visible {
+    opacity: 1;
+    z-index: 100;
+  }
 }
 
 .name {

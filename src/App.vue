@@ -1,12 +1,13 @@
 <template>
   <div>
     <v-sidebar @addPedal="addPedal" />
-    <div class="canvas">
+    <div class="canvas" @click.self="unSelect">
       <v-pedal 
         v-for="pedal in setup" 
         :pedal="pedal" 
         :key="`pedal_key_${pedal.id}`" 
         @selectPedal="selectPedal"
+        :pedal-selected="selectedPedal && selectedPedal.pedal_id === pedal.pedal_id"
       />
     </div>
     <!-- <div class="pedals">
@@ -14,7 +15,7 @@
     </div>
     <PedalBoard /> -->
     <v-modal
-      v-if="selectedPedal && !!selectedPedal.pedal_id"
+      :visible="selectedPedal && !!selectedPedal.pedal_id"
       :title="selectedPedal && selectedPedal.title"
       :id="selectedPedal && selectedPedal.id"
       @rotate="rotate"
@@ -51,6 +52,10 @@ export default {
     addPedal(pedal) {
       const payload = new PedalModel(pedal)
       this.addPedalToSetup(payload)
+    },
+    unSelect() {
+      this.selectPedal(null)
+      console.log(this.selectPedal)
     },
     selectPedal(pedal) {
       this.selectedPedal = pedal
