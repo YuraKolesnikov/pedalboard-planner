@@ -1,17 +1,22 @@
 <template>
-  <div class="pedals">
-    <div v-for="pedal in pedals" class="pedal-wrapper">
-      <Pedal :pedal="pedal" />
+  <div>
+    <div class="pedals">
+      <div v-for="pedal in pedals" class="pedal-wrapper">
+        <Pedal :pedal="pedal" />
+      </div>
     </div>
+    <Pedalboard />
   </div>
 </template>
 
 <script>
-import Pedal from './components/Pedal/Pedal'
+import Pedal from '@/components/Pedal/Pedal'
+import Pedalboard from '@/components/Pedalboard/Pedalboard'
 
 export default {
   components: {
-    Pedal
+    Pedal,
+    Pedalboard
   },
   data() {
     return {
@@ -39,8 +44,7 @@ export default {
         { id: 'acbooster', title: 'Xotic Effects AC Booster', width: 2.5, height: 4.3 },
         { id: 'emdrive', title: 'Emerson Custom EM-Drive', width: 2.5, height: 4.3 },
         { id: 'paramount', title: 'Emerson Custom Paramount', width: 2.5, height: 4.3 },
-        { id: 'scarlettlove', title: '', width: 4.3, height: 2.5 },
-          /* New */
+        { id: 'scarlettlove', title: 'Selah Scarlett Love', width: 4.3, height: 2.5 },
         { id: 'lgw', title: 'Mad Professor Little Green Wonder', width: 2.5, height: 4.4 },
         { id: 'morning_glory', title: 'JHS Morning Glory', width: 2.85, height: 4.87 },
         { id: 'superbolt', title: 'JHS Superbolt', width: 2.72, height: 4.87 },
@@ -68,11 +72,14 @@ export default {
         { id: '1981', title: '1981 DRV', width: 3.52, height: 4.3 },
         { id: 'flint', title: 'Strymon Flint', width: 4, height: 4.5 },
         { id: 'whirl', title: 'Cusack Tap-A-Whirl Tremolo', width: 4.7, height: 4.04 },
+        { id: 'gravitas', title: 'Chase Bliss Gravitas', width: 2.85, height: 4.85 },
         { id: 'monument', title: 'Walrus Monument', width: 2.68, height: 4.87 },
+        { id: 'noir', title: 'Analogworm Noir Tremolo', width: 2.65, height: 4.65 },
         { id: 'mini_volume', title: 'Dunlop Volume Mini', width: 2.97, height: 6 },
         { id: 'd1', title: 'Walrus D1', width: 2.85, height: 4.87 },
         { id: 'timeline', title: 'Strymon Timeline', width: 6.75, height: 5.1 },
         { id: 'capistan', title: 'Strymon El Capistan', width: 4, height: 4.5 },
+        { id: 'arp87', title: 'Walrus ARP-87', width: 2.6, height: 4.77 },
         { id: 'cc_deluxe', title: 'MXR Carbon Copy Deluxe', width: 5, height: 3.81 },
         { id: 'analogdelaymini', title: 'Ibanez Analog Delay Mini', width: 2, height: 3.65 },
         { id: 'bigsky', title: 'Strymon BigSky', width: 6.75, height: 5.1 },
@@ -82,14 +89,11 @@ export default {
         { id: 'tempus', title: 'GFI Specular Tempus', width: 4.72, height: 3.66 },
         { id: 'slo', title: 'Walrus SLO', width: 2.6, height: 4.77 },
         { id: 'fathom', title: 'Walrus Fathom', width: 2.6, height: 4.77 },
-        { id: 'arp87', title: 'Walrus ARP-87', width: 2.6, height: 4.77 },
         { id: 'afterneath', title: 'EarthQuakerDevices Afterneath', width: 2.62, height: 4.87 },
         { id: 'darkworld', title: 'Chase Bliss DarkWorld', width: 2.85, height: 4.85 },
         { id: 'acs1', title: 'Walrus ACS1', width: 2.85, height: 4.87 },
         { id: 'c4', title: 'C4 Synth', width: 2.75, height: 4.5 },
         { id: 'mobius', title: 'Strymon Mobius', width: 6.75, height: 5.1 },
-        { id: 'gravitas', title: 'Chase Bliss Gravitas', width: 2.85, height: 4.85 },
-        { id: 'noir', title: 'Analogworm Noir Tremolo', width: 2.85, height: 4.85 },
         { id: 'poly', title: 'TC Electronic Polytune2', width: 2, height: 3.66 },
         { id: 'quartz', title: 'Selah Quartz V3', width: 2.85, height: 4.87 },
         { id: 'bypass_looper', title: '12-ch Bypass Looper', width: 12, height: 5 },
