@@ -3,12 +3,12 @@
     ref="pedal"
     class="pedal-wrapper"
     :style="wrapperStyles"
-    :class="{[pedal.rotate]: !!pedal.rotate}"
+    :class="{[pedal.rotation]: !!pedal.rotation, 'selected': !!pedalSelected}"
     @click="selectPedal"
     @mousedown="startMoving"
     @mouseup="endMoving">
     <div
-      :class="classes"
+      class="pedal"
       :style="{ backgroundImage: 'url(' + require(`@/assets/${pedal.pedal_id}.png`) + ')', ...pedalStyles }"
     />
   </div>
@@ -28,7 +28,8 @@ export default {
       shiftX: null,
       shiftY: null,
       left: null,
-      top: null
+      top: null,
+      pedalSelected: false
     }
   },
   mounted() {
@@ -43,12 +44,6 @@ export default {
     },
     height() {
       return `${this.pedal.height * 25}px`
-    },
-    classes() {
-      if (this.rotate) {
-        return `pedal ${this.rotate}`
-      }
-      return 'pedal'
     },
     wrapperStyles() {
       return {
@@ -71,7 +66,9 @@ export default {
     }
   },
   methods: {
-    selectPedal() {},
+    selectPedal() {
+      this.pedalSelected = true
+    },
     startMoving(e) {
       this.canDrag = true
       this.shiftX = e.pageX - this.getCoords.left
@@ -79,6 +76,8 @@ export default {
     },
     endMoving() {
       this.canDrag = false
+      this.pedalSelected = false
+      this.$emit('selectPedal', this.pedal)
     },
     updateCoords(e) {
       if (this.canDrag) {
@@ -87,6 +86,9 @@ export default {
         this.pedal.setCoords({ top, left })
       }
     }
+  },
+  beforeMount() {
+    document.removeEventListener('mousemove', this.updateCoords)
   }
 }
 </script>
@@ -97,6 +99,7 @@ export default {
   position: absolute;
   padding: 10px;
   transform: rotate(0);
+  border: 1px solid transparent;
   transition: transform 0.25s ease-in-out;
 
   &.right {
@@ -109,6 +112,10 @@ export default {
 
   &.left {
     transform: rotate(270deg);
+  }
+
+  &.selected {
+    border-color: #8582ff;
   }
 }
 

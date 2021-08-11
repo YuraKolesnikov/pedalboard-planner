@@ -11,6 +11,7 @@ class PedalModel {
     this.left = 15
     this.z = 0
     this.rotation = null
+    this.rotationOptions = ['right', 'bottom', 'left']
   }
 
   _generateId() {
@@ -18,7 +19,12 @@ class PedalModel {
   }
 
   rotate() {
-    this.rotation = 'right'
+    if (!this.rotation) {
+      this.rotation = this.rotationOptions[0]
+    } else {
+      const i = this.rotationOptions.findIndex(opt => opt === this.rotation)
+      this.rotation = this.rotationOptions[i + 1]
+    }
   }
 
   closer() {

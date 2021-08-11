@@ -112,7 +112,7 @@ export default new Vuex.Store({
   },
   mutations: {
     addPedalToSetup: (state, pedal) => state.setup.push(pedal),
-    removePedalFromSetup: (state, id) => state.pedals = state.pedals.filter(pedal => pedal.id === id)
+    removePedalFromSetup: (state, id) => state.setup = state.setup.filter(pedal => pedal.id !== id)
   },
   actions: {
   },
