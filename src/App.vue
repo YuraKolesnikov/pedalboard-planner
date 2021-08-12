@@ -2,24 +2,22 @@
   <div>
     <v-sidebar @addPedal="addPedal" />
     <div class="canvas" @click.self="unSelect">
-      <v-pedal 
-        v-for="pedal in setup" 
-        :pedal="pedal" 
-        :key="`pedal_key_${pedal.id}`" 
+      <v-pedal
+        v-for="pedal in setup"
+        :pedal="pedal"
+        :key="`pedal_key_${pedal.id}`"
         @selectPedal="selectPedal"
         :pedal-selected="selectedPedal && selectedPedal.pedal_id === pedal.pedal_id"
       />
     </div>
-    <!-- <div class="pedals">
-      
-    </div>
-    <PedalBoard /> -->
     <v-modal
       :visible="selectedPedal && !!selectedPedal.pedal_id"
       :title="selectedPedal && selectedPedal.title"
       :id="selectedPedal && selectedPedal.id"
       @rotate="rotate"
       @delete="removePedal"
+      @front="moveFront"
+      @back="moveBack"
     />
   </div>
 </template>
@@ -44,6 +42,9 @@ export default {
       selectedPedal: null
     }
   },
+  created() {
+    document.addEventListener('keydown', this.handleKeyDown)
+  },
   computed: {
     ...mapState(['pedals', 'setup']),
   },
@@ -55,18 +56,43 @@ export default {
     },
     unSelect() {
       this.selectPedal(null)
-      console.log(this.selectPedal)
     },
     selectPedal(pedal) {
       this.selectedPedal = pedal
     },
-    rotate(id) {
-      const pedal = this.setup.find(pedal => pedal.id === id)
-      pedal.rotate()
+    rotate() {
+      this.selectedPedal.rotate()
     },
-    removePedal(id) {
-      this.removePedalFromSetup(id)
+    moveFront() {
+      this.selectedPedal.front()
+    },
+    moveBack() {
+      this.selectedPedal.back()
+    },
+    removePedal() {
+      this.removePedalFromSetup(this.selectedPedal.id)
       this.selectedPedal = null
+    },
+    handleKeyDown(e) {
+      const allowedKeys = ['r', '[', ']', 'd']
+      if (allowedKeys.includes(e.key) && this.selectedPedal !== null) {
+        switch (e.key) {
+          case 'r':
+            this.rotate()
+            break
+          case '[':
+            this.moveBack()
+            break
+          case ']':
+            this.moveFront()
+            break
+          case 'd':
+            this.removePedal()
+            break
+          default:
+            console.log('YEET')
+        }
+      }
     }
   }
 }
@@ -88,12 +114,5 @@ body {
   width: calc(100% - 290px);
   transform: translateX(290px);
   height: 100vh;
-}
-
-.pedals {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  background-color: gray;
 }
 </style>

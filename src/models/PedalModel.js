@@ -27,11 +27,11 @@ class PedalModel {
     }
   }
 
-  closer() {
+  front() {
     this.z++
   }
 
-  deeper() {
+  back() {
     this.z--
   }
 

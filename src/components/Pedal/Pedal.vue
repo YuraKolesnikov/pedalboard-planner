@@ -47,7 +47,7 @@ export default {
       return {
         top: `${this.pedal.top}px`,
         left: `${this.pedal.left}px`,
-        zIndex: 1,
+        zIndex: this.pedal.z,
       }
     },
     pedalStyles() {

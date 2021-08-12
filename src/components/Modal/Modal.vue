@@ -3,19 +3,19 @@
     <div class="name">
       {{ title }}
     </div>
-    <button class="action" @click="$emit('rotate', id)">
+    <button class="action" @click="$emit('rotate')">
       <span>Rotate</span>
       <i>R</i>
     </button>
-    <button class="action">
+    <button class="action" @click="$emit('front')">
       <span>Move Front</span>
       <i>]</i>
     </button>
-    <button class="action">
+    <button class="action" @click="$emit('back')">
       <span>Move Back</span>
       <i>[</i>
     </button>
-    <button class="action" @click="$emit('delete', id)">
+    <button class="action" @click="$emit('delete')">
       <span>Delete</span>
       <i>D</i>
     </button>
