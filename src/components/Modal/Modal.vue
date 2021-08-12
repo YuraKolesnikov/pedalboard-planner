@@ -1,7 +1,7 @@
 <template>
   <div class="modal" :class="{'visible': visible}">
     <div class="name">
-      {{ title }}
+      {{ title }} {{ id }}
     </div>
     <button class="action" @click="$emit('rotate')">
       <span>Rotate</span>

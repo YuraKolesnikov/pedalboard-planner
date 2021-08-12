@@ -82,7 +82,8 @@ export default {
       if (this.canDrag) {
         const top = e.pageY - this.shiftY
         const left = e.pageX - this.shiftX
-        this.pedal.setCoords({ top, left })
+        this.pedal.top = top
+        this.pedal.left = left
       }
     }
   },
