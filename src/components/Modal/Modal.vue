@@ -1,7 +1,7 @@
 <template>
   <div class="modal" :class="{'visible': visible}">
     <div class="name">
-      {{ title }} {{ id }}
+      {{ title }}
     </div>
     <button class="action" @click="$emit('rotate')">
       <span>Rotate</span>
@@ -25,7 +25,6 @@
 export default {
   props: {
     title: String,
-    id: String,
     visible: Boolean
   }
 }

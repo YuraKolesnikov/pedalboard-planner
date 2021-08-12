@@ -7,13 +7,12 @@
         :pedal="pedal"
         :key="`pedal_key_${pedal.id}`"
         @selectPedal="selectPedal"
-        :pedal-selected="selectedPedal && selectedPedal.pedal_id === pedal.pedal_id"
+        :pedal-selected="selectedPedal && selectedPedal.id === pedal.id"
       />
     </div>
     <v-modal
       :visible="selectedPedal && !!selectedPedal.pedal_id"
       :title="selectedPedal && selectedPedal.title"
-      :id="selectedPedal && selectedPedal.id"
       @rotate="rotate"
       @delete="removePedal"
       @front="moveFront"
@@ -39,7 +38,8 @@ export default {
   },
   data() {
     return {
-      selectedPedal: null
+      selectedPedal: null,
+      rotationOptions: ['right', 'bottom', 'left']
     }
   },
   created() {
@@ -49,7 +49,7 @@ export default {
     ...mapState(['pedals', 'setup']),
   },
   methods: {
-    ...mapMutations(['addPedalToSetup', 'removePedalFromSetup']),
+    ...mapMutations(['addPedalToSetup', 'removePedalFromSetup', 'updatePedalState']),
     addPedal(pedal) {
       const payload = new PedalModel(pedal)
       this.addPedalToSetup(payload)
@@ -60,15 +60,22 @@ export default {
     selectPedal(pedal) {
       this.selectedPedal = pedal
     },
-    rotate(id) {
-      const pedal = this.setup.find(pedal => pedal.id === id)
-      pedal.rotate()
+    rotate() {
+      if (!this.selectedPedal.rotation) {
+        this.selectedPedal.rotation = this.rotationOptions[0]
+      } else {
+        const i = this.rotationOptions.findIndex(option => option === this.selectedPedal.rotation)
+        this.selectedPedal.rotation = this.rotationOptions[i + 1]
+      }
+      this.updatePedalState(this.selectedPedal)
     },
     moveFront() {
-      this.selectedPedal.front()
+      this.selectedPedal.z++
+      this.updatePedalState(this.selectedPedal)
     },
     moveBack() {
-      this.selectedPedal.back()
+      this.selectedPedal.z--
+      this.updatePedalState(this.selectedPedal)
     },
     removePedal() {
       this.removePedalFromSetup(this.selectedPedal.id)

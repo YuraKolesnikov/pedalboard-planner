@@ -123,8 +123,8 @@ export default new Vuex.Store({
     addPedalToSetup: (state, pedal) => state.setup.push(pedal),
     removePedalFromSetup: (state, id) => state.setup = state.setup.filter(pedal => pedal.id !== id),
     updatePedalState: (state, newState) => {
-      const pedalInSetup = state.setup.find(pedal => pedal.id === newState.id)
-      console.log(pedalInSetup)
+      let pedalInSetup = { ...state.setup.find(pedal => pedal.id === newState.id), ...newState }
+      return state.setup
     }
   },
   plugins: [PersistedState()]

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import PedalModel from '@/models/PedalModel'
+import { mapMutations } from 'vuex'
 export default {
   props: {
     pedal: Object,
@@ -64,6 +64,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['updatePedalState']),
     selectPedal() {
       this.$emit('selectPedal', this.pedal)
     },
@@ -84,6 +85,7 @@ export default {
         const left = e.pageX - this.shiftX
         this.pedal.top = top
         this.pedal.left = left
+        this.updatePedalState(this.pedal)
       }
     }
   },

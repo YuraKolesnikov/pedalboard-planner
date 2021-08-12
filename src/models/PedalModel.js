@@ -12,21 +12,6 @@ class PedalModel {
     this.z = 0
     this.rotation = null
   }
-
-  front() {
-    this.z++
-  }
-
-  back() {
-    this.z--
-  }
-
-  setCoords({ top, left }) {
-    this.top = top
-    this.left = left
-  }
-
-
 }
 
 export default PedalModel
