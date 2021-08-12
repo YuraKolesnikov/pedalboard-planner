@@ -7,7 +7,9 @@
         :pedal="pedal"
         :key="`pedal_key_${pedal.id}`"
         @selectPedal="selectPedal"
-        :pedal-selected="selectedPedal && selectedPedal.pedal_id === pedal.pedal_id"
+        :pedal-selected="
+          selectedPedal && selectedPedal.pedal_id === pedal.pedal_id
+        "
       />
     </div>
     <v-modal
@@ -23,42 +25,42 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import VSidebar from '@/components/Sidebar/Sidebar'
-import VModal from '@/components/Modal/Modal'
-import VPedal from '@/components/Pedal/Pedal'
-import VPedalBoard from '@/components/Pedalboard/Pedalboard'
+import { mapState, mapMutations } from "vuex";
+import VSidebar from "@/components/Sidebar/Sidebar";
+import VModal from "@/components/Modal/Modal";
+import VPedal from "@/components/Pedal/Pedal";
+import VPedalBoard from "@/components/Pedalboard/Pedalboard";
 
-import PedalModel from '@/models/PedalModel'
+import PedalModel from "@/models/PedalModel";
 export default {
   components: {
     VSidebar,
     VModal,
     VPedal,
-    VPedalBoard
+    VPedalBoard,
   },
   data() {
     return {
-      selectedPedal: null
-    }
+      selectedPedal: null,
+    };
   },
   created() {
     document.addEventListener('keydown', this.handleKeyDown)
   },
   computed: {
-    ...mapState(['pedals', 'setup']),
+    ...mapState(["pedals", "setup"]),
   },
   methods: {
-    ...mapMutations(['addPedalToSetup', 'removePedalFromSetup']),
+    ...mapMutations(["addPedalToSetup", "removePedalFromSetup"]),
     addPedal(pedal) {
-      const payload = new PedalModel(pedal)
-      this.addPedalToSetup(payload)
+      const payload = new PedalModel(pedal);
+      this.addPedalToSetup(payload);
     },
     unSelect() {
       this.selectPedal(null)
     },
     selectPedal(pedal) {
-      this.selectedPedal = pedal
+      this.selectedPedal = pedal;
     },
     rotate() {
       this.selectedPedal.rotate()
@@ -103,14 +105,14 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 .canvas {
   position: relative;
   background-color: #2e3337;
   background-size: 25px;
-  background-image: url('./assets/background.svg');
+  background-image: url("./assets/background.svg");
   width: calc(100% - 290px);
   transform: translateX(290px);
   height: 100vh;
